@@ -1,5 +1,5 @@
-
 import * as THREE from "https://unpkg.com/three/build/three.module.js";
+import WebGL from "./WebGL.js";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -23,4 +23,10 @@ function animate() {
   cube.rotation.y += 0.01;
   renderer.render(scene, camera);
 }
-animate();
+
+if (WebGL.isWebGL2Available()) {
+  animate();
+} else {
+  const warning = WebGL.getWebGLErrorMessage();
+  document.getElementById("container").appendChild(warning);
+}
