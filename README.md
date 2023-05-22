@@ -1,3 +1,3 @@
-# Creating a scene
+# Drawing lines
 
-一个正在旋转的立方体
+画线，画圆
