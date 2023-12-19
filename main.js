@@ -20,17 +20,21 @@ const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({
   color: 80000000,
 });
+const cube = new THREE.Mesh(geometry, material);
+
 const parent_material = new THREE.MeshBasicMaterial({
   color: "#FFE4E1",
 });
-const cube = new THREE.Mesh(geometry, material);
 const parent_cube = new THREE.Mesh(geometry, parent_material);
 parent_cube.add(cube);
 
 parent_cube.position.set(-5, 0, 0);
-cube.scale.set(2, 2, 2);
+parent_cube.scale.set(2, 2, 2);
+parent_cube.rotation.x = Math.PI / 4;
 
 cube.position.set(5, 0, 0);
+cube.scale.set(2, 2, 2);
+cube.rotation.x = Math.PI / 4;
 scene.add(parent_cube);
 
 const axesHelper = new THREE.AxesHelper(5);
@@ -42,8 +46,8 @@ function animate() {
   control.update();
   requestAnimationFrame(animate);
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
 
   renderer.render(scene, camera);
 }

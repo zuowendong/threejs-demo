@@ -226,3 +226,65 @@ scene.add(parent_cube);
 ![](./public/readme/6.png)
 
 我的个人理解，这里的子元素位置相当于 CSS 中设置了 `position: absolute`，当没有父元素的时候，是基于整个文档定位，当有父元素`position: relative`时依据父元素定位。
+
+### 缩放和旋转
+
+具体定义说明可以参考官网，https://threejs.org/docs/index.html#api/zh/core/Object3D.rotation
+
+先将子元素的旋转动画停止
+```js
+function animate() {
+  control.update();
+  requestAnimationFrame(animate);
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+```
+
+设置子元素放大，
+```js
+cube.scale.set(2, 2, 2);
+```
+
+子元素cube的 x,y,z 都放大 2 倍，明显能看出大了很多。
+
+![](./public/readme/7.png)
+
+设置父元素放大 2 倍
+```js
+parent_cube.scale.set(2, 2, 2);
+```
+
+回到浏览器，可以发现父元素放大了 2 倍，但是子元素更大了，它在父元素的 2 倍基础上在乘上自己的放大 2 倍。
+
+![](./public/readme/8.png)
+
+这里可以得出结论，父子元素间缩放关系，子元素会根据父元素的缩放倍数进行缩放。
+
+设置子元素的旋转
+```js
+cube.rotation.x = Math.PI / 4;
+```
+
+子元素cube绕着 x 轴旋转 45°
+
+![](./public/readme/9.png)
+
+设置父元素旋转
+```js
+parent_cube.rotation.x = Math.PI / 4;
+```
+
+父元素绕着 x 轴旋转 45°
+
+![](./public/readme/10.png)
+
+可以发现，子元素也跟着旋转了，两次45°旋转又恢复了平行位置。
+
+在 three [编辑器](https://threejs.org/editor/)，可视化来看一下
+
+![](./public/readme/11.gif)
+
+由此可以得出结论，父子间缩放和旋转的关系，子元素跟随父元素变化。
+我的个人理解，可以将父子看成一个组合，当子元素加入到父元素时就形成了一个组，以父元素为基准，父元素缩放旋转都会带动整个组的变化，那组内的子元素自然就会相应的变化，但是子元素在组内如何的旋转缩放都不会影响到父元素，组员动弹不了组长。
